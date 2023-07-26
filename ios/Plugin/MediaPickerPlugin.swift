@@ -5,10 +5,6 @@ import Photos
 import ImageIO
 import DKImagePickerController
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitorjs.com/docs/plugins/ios
- */
 @objc(MediaPickerPlugin)
 public class MediaPickerPlugin: CAPPlugin {
     
@@ -21,14 +17,14 @@ public class MediaPickerPlugin: CAPPlugin {
         self.imagePicker.assetType = .allAssets // This allows the picker to select both images and videos
 
         DispatchQueue.main.async {
-            self.bridge.viewController.present(self.imagePicker, animated: true) {
+            self.bridge?.viewController?.present(self.imagePicker, animated: true) {
                 self.imagePicker.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
                     var resultArray = [Any]()
                     let dispatchGroup = DispatchGroup()
 
                     for asset in assets {
                         dispatchGroup.enter()
-                        asset.fetchOriginalDataWithCompleteBlock { data, info in
+                        asset.fetchImageData { data, info in
                             if let data = data {
                                 let sourceOptionsDict = [kCGImageSourceShouldCache: false] as CFDictionary
                                 let source = CGImageSourceCreateWithData(data as CFData, sourceOptionsDict)!
@@ -38,8 +34,8 @@ public class MediaPickerPlugin: CAPPlugin {
                                     "data": data.base64EncodedString(),
                                     "exifData": exifData as Any
                                 ])
+                                dispatchGroup.leave()
                             }
-                            dispatchGroup.leave()
                         }
                     }
 
@@ -53,13 +49,3 @@ public class MediaPickerPlugin: CAPPlugin {
         }
     }
 }
-// public class MediaPickerPlugin: CAPPlugin {
-//     private let implementation = MediaPicker()
-
-//     @objc func echo(_ call: CAPPluginCall) {
-//         let value = call.getString("value") ?? ""
-//         call.resolve([
-//             "value": implementation.echo(value)
-//         ])
-//     }
-// }
