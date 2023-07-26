@@ -13,24 +13,20 @@ npx cap sync
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
+* [`getMedia()`](#getmedia)
 
 </docgen-index>
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### echo(...)
+### getMedia()
 
 ```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+getMedia() => Promise<{ results: any[]; }>
 ```
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
-
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>Promise&lt;{ results: any[]; }&gt;</code>
 
 --------------------
 

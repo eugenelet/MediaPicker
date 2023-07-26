@@ -1,3 +1,4 @@
 export interface MediaPickerPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  getMedia(): Promise<{ results: any[] }>;
+  // echo(options: { value: string }): Promise<{ value: string }>;
 }
